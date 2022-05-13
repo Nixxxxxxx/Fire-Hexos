@@ -23,7 +23,6 @@
             left: -100px;
         }
 
-
         img {
             max-width: 100%;
             max-height: 100%;
@@ -48,13 +47,19 @@
             top: 50%;
             left: 50%;
             width: 30em;
-            height: 18em;
-            margin-top: -9em; 
+            height: 40em;
+            margin-top: -20em;
             margin-left: -15em;
-            background-color: red;
+            background-color: #437a7a;
             padding: 20px;
+            border: solid 2px white;
+            border-radius: 10px;
         }
 
+        #cardForm button{
+            position:relative;
+            bottom: 10px;
+        }
 
         /*NAVIGATION LIST*/
         ul {
@@ -75,7 +80,7 @@
             text-decoration: none;
             border-radius: 5px;
             margin-bottom: 20px;
-            font-weight:800;
+            font-weight: 800;
         }
 
             li a.active {
@@ -88,7 +93,7 @@
                 color: #335a5a;
             }
 
-            /*legend color-profile NAVIGATION*/
+        /*legend color-profile NAVIGATION*/
 
     </style>
 </head>
@@ -101,7 +106,7 @@
                     <li><a id="guild" class="active" href="#none">GUILD</a></li>
                     <li><a id="tutorials" href="#none">TUTORIALS</a></li>
                     <li><a id="ranking" href="#none">RANKING</a></li>
-                    <li><a id="news"  href="#none">NEWS</a></li>
+                    <li><a id="news" href="#none">NEWS</a></li>
                 </ul>
             </div>
             <div class="col-md-10">
@@ -113,13 +118,13 @@
 
                 </div>
                 <div id="tutorialContainer" class="row">
-                    <p class="w-100 text-center">No tutorials available for the moment. The game is Prety simple, so get on with it!!!!!!!</p> 
+                    <p class="w-100 text-center">No tutorials available for the moment. The game is Prety simple, so get on with it!!!!!!!</p>
                 </div>
                 <div id="rankingContainer" class="row">
-                    <p class="w-100 text-center">You are too early, the championship has yet to begin.</p> 
+                    <p class="w-100 text-center">You are too early, the championship has yet to begin.</p>
                 </div>
                 <div id="newsContainer" class="row">
-                    <p class="w-100 text-center">Demon have invaded the battle zone, get ready to fight !!!</p> 
+                    <p class="w-100 text-center">Demon have invaded the battle zone, get ready to fight !!!</p>
                 </div>
             </div>
 
@@ -127,14 +132,33 @@
 
     </div>
 
-    <div id="cardForm">
+    <div id="cardForm" class="container">
+        <div class="row">
+            <div class="col-md-6 mt-4">
+                <img id="card-image" src="images/favicon.ico" />
+            </div>
+            <div class="col-md-6">
+                <div class="row">Name: <input id="card-name" /> </div>
+                <div class="row">Atk : <input id="card-atk" type="number" /> </div>
+                <div class="row">Def : <input id="card-def" type="number" /> </div>
+                <div class="row">Cost : <input id="card-cost" type="number" /> </div>
+                <div class="row">Gold: <input id="card-gold" type="number" /> </div>
+            </div>
+        </div>
 
-        <br />
-        Name: <input id="card-name" /><br />
-        Atk : <input id="card-atk" type="number"/><br />
-        Def : <input id="card-def" type="number"/><br />
-        Cost : <input id="card-cost" type="number"/><br />
-        Gold: <input id="card-gold" type="number"/><br />
+        <div class="row my-3">
+            <label for="card-race" class="col-md-5"> RACE : </label>
+            <select name="card-race" id="card-race" class="col-md-7">
+                <option value="UNDEFINE">UNDEFINE</option>
+                <option value="HUMAN">HUMAN</option>
+                <option value="mercedes">ORG</option>
+                <option value="ORG">ELF</option>
+                <option value="UNDEAD">UNDEAD</option>
+                <option value="DEMON">DEMON</option>
+                <option value="GOLEM">GOLEM</option>
+                <option value="BEAST">BEAST</option>
+            </select>
+        </div>
 
         <br />
         <button onclick="exportCardsAsJson()">Export</button>
@@ -234,11 +258,14 @@
             editCard = card;
 
             toggleCardFormVisibility();
+            document.getElementById('card-image').src = editCard.imageUrl;
             document.getElementById('card-name').value = card.name;
             document.getElementById('card-atk').value = card.atk;
             document.getElementById('card-def').value = card.def;
             document.getElementById('card-cost').value = card.cost;
             document.getElementById('card-gold').value = card.gold;
+
+            document.getElementById('card-race').value = card.race;
         }
 
         function exportCardsAsJson() {
@@ -258,18 +285,16 @@
                 x.style.visibility = 'collapse';
             }
         }
-        
+
         function saveTemporaryChanges() {
             editCard.name = document.getElementById('card-name').value;
             editCard.atk = new Number(document.getElementById('card-atk').value);
             editCard.def = new Number(document.getElementById('card-def').value);
             editCard.cost = new Number(document.getElementById('card-cost').value);
             editCard.gold = new Number(document.getElementById('card-gold').value);
+
+            editCard.race = document.getElementById('card-race').value;
         }
-
-
-
-
     </script>
 </body>
 </html>
