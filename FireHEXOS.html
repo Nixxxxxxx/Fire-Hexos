@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FIRE HEXOS</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css'>
+
+    <style>
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .customCard {
+            margin: 10px;
+            border: double 2px;
+            border-radius: 4px;
+        }
+
+        .container {
+            margin-bottom: 100px;
+        }
+
+        #cardForm {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 30em;
+            height: 18em;
+            margin-top: -9em; /*set to a negative number 1/2 of your height*/
+            margin-left: -15em; /*set to a negative number 1/2 of your width*/
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="text-center m-4">FIRE-HEXOS</h1>
+    <div id="container" class="container">
+        <div id="innerContainer" class="row">
+
+        </div>
+    </div>
+
+    <div id="cardForm">
+        <button onclick="exportCardsAsJson()">Export</button>
+        <button onclick="toggleCardFormVisibility()">Close</button>
+    </div>
+
+    <script>
+        var importedCards = "";
+        document.getElementById('cardForm').style.visibility = "hidden";
+
+        fetch('https://fire-hexos-default-rtdb.europe-west1.firebasedatabase.app/cards.json')
+            .then(response => response.json())
+            .then(data => processCards(data));
+
+        function exportCardsAsJson() {
+            var myJsonString = JSON.stringify(importedCards);
+            var bb = new Blob([myJsonString], { type: 'text/plain' });
+            var a = document.createElement('a');
+            a.download = 'fire_hexos_cards.json';
+            a.href = window.URL.createObjectURL(bb);
+            a.click();
+        }
+
+        function processCards(cards) {
+            importedCards = cards;
+            var arrayLength = cards.length;
+            for (var i = 0; i < arrayLength; i++) {
+                //console.log(cards[i].name);
+                insertCard(cards[i])
+            }
+
+
+        }
+
+        function insertCard(card) {
+            var cardDiv = document.createElement('div');
+            cardDiv.className += "col-md-2 ";
+
+
+            var div = document.createElement('div');
+            div.className += "customCard ";
+
+            var img = document.createElement('img');
+            img.src = card.imageUrl;
+            var button = document.createElement('button');
+            button.innerHTML = card.name;
+
+            button.onclick = function () {
+                loadingCardForm(card);
+            };
+
+            div.appendChild(img);
+            div.appendChild(button);
+            cardDiv.appendChild(div);
+            document.getElementById('innerContainer').appendChild(cardDiv);
+
+        }
+
+        function loadingCardForm(card) {
+            console.log(card.name);
+            card.name = "XXXXXX";
+            toggleCardFormVisibility();
+        }
+
+        function toggleCardFormVisibility() {
+            var x = document.getElementById('cardForm');
+            if (x.style.visibility === 'hidden') {
+                x.style.visibility = 'visible';
+            } else {
+                x.style.visibility = 'hidden';
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
