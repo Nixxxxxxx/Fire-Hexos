@@ -4,7 +4,8 @@
     <title>FIRE HEXOS</title>
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css'>
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jodit/3.2.46/jodit.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jodit/3.2.46/jodit.min.js"></script>
     <style>
         h1 {
             font-size: 60px;
@@ -47,8 +48,8 @@
             top: 50%;
             left: 50%;
             width: 30em;
-            height: 40em;
-            margin-top: -20em;
+            height: 46em;
+            margin-top: -23em;
             margin-left: -15em;
             background-color: #437a7a;
             padding: 20px;
@@ -56,10 +57,10 @@
             border-radius: 10px;
         }
 
-        #cardForm button{
-            position:relative;
-            bottom: 10px;
-        }
+
+            #cardForm button {
+                float: inline-end;
+            }
 
         /*NAVIGATION LIST*/
         ul {
@@ -147,12 +148,23 @@
         </div>
 
         <div class="row my-3">
-            <label for="card-race" class="col-md-5"> RACE : </label>
+            <label for="card-rarity" class="col-md-5 text-center"> RARITY : </label>
+            <select name="card-rarity" id="card-rarity" class="col-md-7">
+                <option value="BASE">BASE</option>
+                <option value="COMMON">COMMON</option>
+                <option value="RARE">RARE</option>
+                <option value="EPIC">EPIC</option>
+                <option value="LEGENDARY">LEGENDARY</option>
+            </select>
+        </div>
+
+        <div class="row my-3">
+            <label for="card-race" class="col-md-5 text-center"> RACE : </label>
             <select name="card-race" id="card-race" class="col-md-7">
                 <option value="UNDEFINE">UNDEFINE</option>
                 <option value="HUMAN">HUMAN</option>
-                <option value="mercedes">ORG</option>
-                <option value="ORG">ELF</option>
+                <option value="ORG">ORG</option>
+                <option value="ELF">ELF</option>
                 <option value="UNDEAD">UNDEAD</option>
                 <option value="DEMON">DEMON</option>
                 <option value="GOLEM">GOLEM</option>
@@ -160,10 +172,55 @@
             </select>
         </div>
 
+
+        <div class="row my-3">
+            <label for="card-job" class="col-md-5 text-center"> JOB : </label>
+            <select name="card-job" id="card-job" class="col-md-7">
+                <option value="NONE">NONE</option>
+                <option value="WARRIOR">WARRIOR</option>
+                <option value="ARCHER">ARCHER</option>
+                <option value="LANCER">LANCER</option>
+                <option value="SCOUT">SCOUT</option>
+                <option value="MAGE">MAGE</option>
+            </select>
+        </div>
+
+        <div class="row my-3">
+            <label for="card-animationType" class="col-md-5 text-center"> ATTACK-ANIMATION : </label>
+            <select name="card-animationType" id="card-animationType" class="col-md-7">
+                <option value="SWITCH">SWITCH</option>
+                <option value="EXPLOSION">EXPLOSION</option>
+                <!--<option value="FIREBALL">FIREBALL</option>-->
+                <option value="DEATH">DEATH</option>
+                <!--<option value="POISON">POISON</option>-->
+                <option value="LIGHTNING">LIGHTNING</option>
+                <!--<option value="GHOST">GHOST</option>-->
+            </select>
+        </div>
+
+        <!--<div id="card-description" class="row">
+            <textarea rows="5" cols="50">
+                    Card description !!!
+            </textarea>
+
+        </div>-->
+
+        <input id="fileName" type="text" value="Enter something">
+        <input type="button" value="Save File" onclick="msg()">
+
         <br />
-        <button onclick="exportCardsAsJson()">Export</button>
-        <button onclick="saveTemporaryChanges()">Update</button>
-        <button onclick="toggleCardFormVisibility()">Close</button>
+
+        <textarea id="editor" name="editor" style="width:100%; height:100px"></textarea>
+ 
+        <br />
+
+        <div class="row">
+            <button class="col-md-3" onclick="updateAbility()">SKILL</button>
+            <button class="col-md-3" onclick="exportCardsAsJson()">Export</button>
+            <button class="col-md-3" onclick="saveTemporaryChanges()">Update</button>
+            <button class="col-md-3" onclick="toggleCardFormVisibility()">Close</button>
+        </div>
+
     </div>
 
 
@@ -264,8 +321,14 @@
             document.getElementById('card-def').value = card.def;
             document.getElementById('card-cost').value = card.cost;
             document.getElementById('card-gold').value = card.gold;
+            //document.getElementById('card-description').innerText = card.description;
+            var editor = new Jodit('#editor');
+            editor.value = card.description;
 
+            document.getElementById('card-job').value = card.job;
+            document.getElementById('card-rarity').value = card.rarity;
             document.getElementById('card-race').value = card.race;
+            document.getElementById('card-animationType').value = card.animationType;
         }
 
         function exportCardsAsJson() {
@@ -294,6 +357,10 @@
             editCard.gold = new Number(document.getElementById('card-gold').value);
 
             editCard.race = document.getElementById('card-race').value;
+        }
+
+        function updateAbility() {
+
         }
     </script>
 </body>
