@@ -46,7 +46,7 @@
             width: 55em;
             height: 42em;
             margin-top: -21em;
-            margin-left: -28em;
+            margin-left: -26em;
             background-color: #437a7a;
             padding: 20px;
             border: solid 2px white;
@@ -73,7 +73,7 @@
         li a {
             display: block;
             color: #000;
-            padding: 8px 16px;
+            padding: 2px 4px;
             text-decoration: none;
             border-radius: 5px;
             margin-bottom: 20px;
@@ -144,62 +144,54 @@
         </div>
 
         <div class="row my-3">
-            <label for="card-rarity" class="col-md-5 text-center"> RARITY : </label>
-            <select name="card-rarity" id="card-rarity" class="col-md-7">
-                <option value="BASE">BASE</option>
-                <option value="COMMON">COMMON</option>
-                <option value="RARE">RARE</option>
-                <option value="EPIC">EPIC</option>
-                <option value="LEGENDARY">LEGENDARY</option>
-            </select>
+            <div class="col-md-3">
+                <label for="card-rarity" class="col-md-5 text-center">RARITY</label>
+                <select name="card-rarity" id="card-rarity" class="col-md-7" >
+                    <option value="BASE">BASE</option>
+                    <option value="COMMON">COMMON</option>
+                    <option value="RARE">RARE</option>
+                    <option value="EPIC">EPIC</option>
+                    <option value="LEGENDARY">LEGENDARY</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="card-race" class="col-md-5 text-center">RACE</label>
+                <select name="card-race" id="card-race" class="col-md-7"  style="width: 200px;">
+                    <option value="UNDEFINE">UNDEFINE</option>
+                    <option value="HUMAN">HUMAN</option>
+                    <option value="ORG">ORG</option>
+                    <option value="ELF">ELF</option>
+                    <option value="UNDEAD">UNDEAD</option>
+                    <option value="DEMON">DEMON</option>
+                    <option value="GOLEM">GOLEM</option>
+                    <option value="BEAST">BEAST</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="card-job" class="col-md-5 text-center">JOB</label>
+                <select name="card-job" id="card-job" class="col-md-7">
+                    <option value="NONE">NONE</option>
+                    <option value="WARRIOR">WARRIOR</option>
+                    <option value="ARCHER">ARCHER</option>
+                    <option value="LANCER">LANCER</option>
+                    <option value="SCOUT">SCOUT</option>
+                    <option value="MAGE">MAGE</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="card-animationType" class="col-md-5 text-center">ATTACK</label>
+                <select name="card-animationType" id="card-animationType" class="col-md-7">
+                    <option value="SWITCH">SWITCH</option>
+                    <option value="EXPLOSION">EXPLOSION</option>
+                    <!--<option value="FIREBALL">FIREBALL</option>-->
+                    <option value="DEATH">DEATH</option>
+                    <!--<option value="POISON">POISON</option>-->
+                    <option value="LIGHTNING">LIGHTNING</option>
+                    <!--<option value="GHOST">GHOST</option>-->
+                </select>
+            </div>
+
         </div>
-
-        <div class="row my-3">
-            <label for="card-race" class="col-md-5 text-center"> RACE : </label>
-            <select name="card-race" id="card-race" class="col-md-7">
-                <option value="UNDEFINE">UNDEFINE</option>
-                <option value="HUMAN">HUMAN</option>
-                <option value="ORG">ORG</option>
-                <option value="ELF">ELF</option>
-                <option value="UNDEAD">UNDEAD</option>
-                <option value="DEMON">DEMON</option>
-                <option value="GOLEM">GOLEM</option>
-                <option value="BEAST">BEAST</option>
-            </select>
-        </div>
-
-
-        <div class="row my-3">
-            <label for="card-job" class="col-md-5 text-center"> JOB : </label>
-            <select name="card-job" id="card-job" class="col-md-7">
-                <option value="NONE">NONE</option>
-                <option value="WARRIOR">WARRIOR</option>
-                <option value="ARCHER">ARCHER</option>
-                <option value="LANCER">LANCER</option>
-                <option value="SCOUT">SCOUT</option>
-                <option value="MAGE">MAGE</option>
-            </select>
-        </div>
-
-        <div class="row my-3">
-            <label for="card-animationType" class="col-md-5 text-center"> ATTACK-ANIMATION : </label>
-            <select name="card-animationType" id="card-animationType" class="col-md-7">
-                <option value="SWITCH">SWITCH</option>
-                <option value="EXPLOSION">EXPLOSION</option>
-                <!--<option value="FIREBALL">FIREBALL</option>-->
-                <option value="DEATH">DEATH</option>
-                <!--<option value="POISON">POISON</option>-->
-                <option value="LIGHTNING">LIGHTNING</option>
-                <!--<option value="GHOST">GHOST</option>-->
-            </select>
-        </div>
-
-        <!--<div id="card-description" class="row">
-            <textarea rows="5" cols="50">
-                    Card description !!!
-            </textarea>
-
-        </div>-->
 
         <br />
 
