@@ -25,8 +25,8 @@
         }
 
         img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 70%;
+            max-height: 70%;
         }
 
         .navigation {
@@ -47,10 +47,10 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            width: 30em;
+            width: 45em;
             height: 46em;
             margin-top: -23em;
-            margin-left: -15em;
+            margin-left: -22em;
             background-color: #437a7a;
             padding: 20px;
             border: solid 2px white;
@@ -135,15 +135,15 @@
 
     <div id="cardForm" class="container">
         <div class="row">
-            <div class="col-md-6 mt-4">
+            <div class="col-md-6 ">
                 <img id="card-image" src="images/favicon.ico" />
             </div>
             <div class="col-md-6">
-                <div class="row">Name: <input id="card-name" /> </div>
-                <div class="row">Atk : <input id="card-atk" type="number" /> </div>
-                <div class="row">Def : <input id="card-def" type="number" /> </div>
-                <div class="row">Cost : <input id="card-cost" type="number" /> </div>
-                <div class="row">Gold: <input id="card-gold" type="number" /> </div>
+                <div class="row"><span class="col-md-3">Name: </span><span class="col-md-7"> <input id="card-name" /> </span></div>
+                <div class="row"><span class="col-md-3">Atk : </span><span class="col-md-7"> <input id="card-atk" type="number" /> </span> </div>
+                <div class="row"><span class="col-md-3">Def : </span><span class="col-md-7"> <input id="card-def" type="number" /> </span> </div>
+                <div class="row"><span class="col-md-3">Cost : </span><span class="col-md-7"> <input id="card-cost" type="number" /> </span> </div>
+                <div class="row"><span class="col-md-3">Gold : </span><span class="col-md-7"> <input id="card-gold" type="number" /> </span> </div>
             </div>
         </div>
 
@@ -204,9 +204,6 @@
             </textarea>
 
         </div>-->
-
-        <input id="fileName" type="text" value="Enter something">
-        <input type="button" value="Save File" onclick="msg()">
 
         <br />
 
