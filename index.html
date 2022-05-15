@@ -14,6 +14,10 @@
             margin: 20px;
             padding: 20px;
         }
+        input {
+            display: inline-block;
+            width: 100%
+        }
 
         sup {
             color: #335a5a;
@@ -63,7 +67,7 @@
             margin-top: -21em;
             margin-left: -26em;
             background-color: #437a7a;
-            padding: 20px;
+            padding: 5px;
             border: solid 2px white;
             border-radius: 10px;
         }
@@ -301,18 +305,18 @@
 
     <div id="cardForm" class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-1">
                 <img id="card-image" src="images/favicon.ico" />
             </div>
-            <div class="col-md-4">
-                <div class="row"><span class="col-md-3">Name: </span><span class="col-md-7"> <input id="card-name" /> </span></div>
-                <div class="row"><span class="col-md-3">Atk : </span><span class="col-md-7"> <input id="card-atk" type="number" /> </span> </div>
-                <div class="row"><span class="col-md-3">Def : </span><span class="col-md-7"> <input id="card-def" type="number" /> </span> </div>
-                <div class="row"><span class="col-md-3">Cost : </span><span class="col-md-7"> <input id="card-cost" type="number" /> </span> </div>
-                <div class="row"><span class="col-md-3">Gold : </span><span class="col-md-7"> <input id="card-gold" type="number" /> </span> </div>
+            <div class="col-md-3">
+                <div class="row"><span class="col-md-3">Name</span><span class="col-md-7"> <input id="card-name" width="20"/> </span></div>
+                <div class="row"><span class="col-md-3">Atk</span><span class="col-md-7"> <input id="card-atk" type="number" /> </span> </div>
+                <div class="row"><span class="col-md-3">Def</span><span class="col-md-7"> <input id="card-def" type="number" /> </span> </div>
+                <div class="row"><span class="col-md-3">Cost</span><span class="col-md-7"> <input id="card-cost" type="number" /> </span> </div>
+                <div class="row"><span class="col-md-3">Gold</span><span class="col-md-7"> <input id="card-gold" type="number" /> </span> </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-7">
                 <textarea id="editor" name="editor" style="width:100%; height:100px"></textarea>
             </div>
         </div>
@@ -369,7 +373,7 @@
 
         <br />
 
-        <div class="row">
+        <div class="row px-4">
             <button class="col-md-3" onclick="toggleSkillFormVisibility()">SKILL</button>
             <button class="col-md-3" onclick="exportCardsAsJson()">Export</button>
             <button class="col-md-3" onclick="saveTemporaryChanges()">Update</button>
