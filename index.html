@@ -151,10 +151,10 @@
             </div>
             <div class="col-md-5">
                 <div class="row"><span class="col-md-3">Name: </span><span class="col-md-7"> <input id="skill-name" /> </span></div>
-                <div class="row"><span class="col-md-3">Atk : </span><span class="col-md-7"> <input id="skill-atk-bonus" type="number" value="0"/> </span> </div>
-                <div class="row"><span class="col-md-3">Def : </span><span class="col-md-7"> <input id="skill-def-bonus" type="number" value="0"/> </span> </div>
-                <div class="row"><span class="col-md-3">Cost : </span><span class="col-md-7"> <input id="skill-cost-bonus" type="number" value="0"/> </span> </div>
-                <div class="row"><span class="col-md-3">Gold : </span><span class="col-md-7"> <input id="skill-gold-bonus" type="number" value="0"/> </span> </div>
+                <div class="row"><span class="col-md-3">Atk : </span><span class="col-md-7"> <input id="skill-atk-bonus" type="number" value="0" /> </span> </div>
+                <div class="row"><span class="col-md-3">Def : </span><span class="col-md-7"> <input id="skill-def-bonus" type="number" value="0" /> </span> </div>
+                <div class="row"><span class="col-md-3">Cost : </span><span class="col-md-7"> <input id="skill-cost-bonus" type="number" value="0" /> </span> </div>
+                <div class="row"><span class="col-md-3">Gold : </span><span class="col-md-7"> <input id="skill-gold-bonus" type="number" value="0" /> </span> </div>
 
             </div>
 
@@ -266,7 +266,7 @@
         <h5 class="text-center">UNITS/CARDS TO BE TARGETED</h5>
         <div class="row my-3">
             <div class="col-md-4">
-                <label for="skill-target" class="col-md-5 text-center">SOURCE</label>
+                <label for="skill-target" class="col-md-5 text-center">TARGETS</label>
                 <select name="skill-target" id="skill-target" class="col-md-7" style="width: 200px;">
                     <option value="NONE">NONE</option>
                     <option value="HAND">HAND</option>
@@ -289,9 +289,13 @@
             <button class="col-md-3" onclick="updateAbility()">Add-Skill</button>
             <div class="col-md-3"></div>
             <!--<button class="col-md-3" onclick="exportCardsAsJson()">Export</button>
-        <button class="col-md-3" onclick="saveTemporaryChanges()">Update</button>-->
+            <button class="col-md-3" onclick="saveTemporaryChanges()">Update</button>-->
             <button class="col-md-3" onclick="toggleSkillFormVisibility()">Close</button>
         </div>
+
+        <p id="sourceDetailsInfo">
+
+        </p>
 
     </div>
 
@@ -378,6 +382,8 @@
     <script>
         var importedCards = "";
         var editCard = "";
+        var details = "";
+        var abilities = "";
 
         document.getElementById('cardForm').style.visibility = "collapse";
         document.getElementById('abilityForm').style.visibility = "collapse";
@@ -473,7 +479,7 @@
             document.getElementById('card-def').value = editCard.def;
             document.getElementById('card-cost').value = editCard.cost;
             document.getElementById('card-gold').value = editCard.gold;
-            //document.getElementById('card-description').innerText = card.description;           
+            //document.getElementById('card-description').innerText = card.description;
             try {
                 var editor = new Jodit('#editor');
                 editor.value = card.description;
@@ -495,7 +501,10 @@
             document.getElementById('skill-atk-bonus').value = 0;
             document.getElementById('skill-def-bonus').value = 0;
             document.getElementById('skill-cost-bonus').value = 0;
-            document.getElementById('skill-gold-bonus').value = 100;
+            document.getElementById('skill-gold-bonus').value = 0;
+            abilities = new Array();
+            details = new Map();
+            document.getElementById('sourceDetailsInfo').innerHTML = "";
         }
 
         function exportCardsAsJson() {
@@ -542,8 +551,54 @@
             editCard.animationType = document.getElementById('card-animationType').value;
         }
 
-        function updateAbility() {
+        function addDetailToSkill() {
+            var sourceCategory = document.getElementById('skill-source-category').value;
+            var sourceCategoryDetail = document.getElementById('skill-source-category-detail').value;
+            details.set(sourceCategory, sourceCategoryDetail);
+        }
 
+        function updateAbility() {
+            var ability = new Object();
+            ability.animationType = document.getElementById('skill-action').value;
+            ability.atk = new Number(document.getElementById('skill-atk-bonus').value);
+            ability.cost = new Number(document.getElementById('skill-cost-bonus').value);
+            ability.def = new Number(document.getElementById('skill-def-bonus').value);
+            ability.description = document.getElementById('skill-description').value;
+            ability.gold = new Number(document.getElementById('skill-gold-bonus').value);
+            ability.job = document.getElementById('skill-job').value;
+            ability.loop = 1;
+            ability.name = document.getElementById('skill-name').value;
+            ability.range = 1;
+            ability.triggerType = document.getElementById('skill-trigger').value;
+
+            var targets = new Object();
+            targets.target = document.getElementById('skill-target').value;
+            ability.targets = targets;
+
+            var sources = new Object();
+            sources.target = document.getElementById('skill-source').value;
+
+            if (details.size > 0) {
+                console.log("Details were added");
+                sources.details = Object.fromEntries(details);
+            }
+
+
+            ability.sources = sources;
+
+            abilities.push(ability);
+            editCard.abilities = abilities;
+
+            var abilityInfo = ""
+
+            for (let i = 0; i < abilities.length; i++) {
+                var a = abilities[i];
+                abilityInfo = (abilityInfo + "<br>" + a.name + "::=>" + JSON.stringify(a.sources.details));
+            }
+            
+
+            document.getElementById('sourceDetailsInfo').innerHTML = abilityInfo;
+            details = new Map();
         }
     </script>
 </body>
