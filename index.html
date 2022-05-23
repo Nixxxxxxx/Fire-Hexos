@@ -14,6 +14,7 @@
             margin: 20px;
             padding: 20px;
         }
+
         input {
             display: inline-block;
             width: 100%
@@ -29,8 +30,8 @@
         }
 
         img {
-            max-width: 50%;
-            max-height: 50%;
+            max-width: 80%;
+            max-height: 80%;
         }
 
         .navigation {
@@ -39,8 +40,36 @@
 
         .customCard {
             margin: 10px;
+            height: 200px;
             border: double 2px;
             border-radius: 4px;
+        }
+
+            .customCard button {
+                font-size: 10px;
+            }
+
+            .customCard image {
+                width: 100px;
+                height: 100px;
+            }
+
+
+        .infoCard {
+            width: 150px;
+        }
+
+        div.customAbilityCard {
+            border-style: double;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 4em;
+        }
+
+
+        .infoImg {
+            width: 50px;
+            height: 50px;
         }
 
         #abilityForm {
@@ -51,6 +80,7 @@
             height: 42em;
             margin-top: -21em;
             margin-left: -26em;
+            overflow-y: scroll;
             background-color: #437a7a;
             padding: 20px;
             border: solid 2px white;
@@ -67,15 +97,26 @@
             margin-top: -21em;
             margin-left: -26em;
             background-color: #437a7a;
-            padding: 5px;
+            padding: 15px;
+            padding-bottom: 60px;
             border: solid 2px white;
             border-radius: 10px;
+            overflow-y: scroll;
+            overflow-x: hidden;
         }
 
+        .ability-btn {
+            color: white;
+            position: absolute;
+            left: 45%;
+            font-weight: bold;
+            border-radius: 10px;
+            background-color: #335a5a;
+        }
 
-            #cardForm button {
-                float: inline-end;
-            }
+        #cardForm button {
+            float: inline-end;
+        }
 
         /*NAVIGATION LIST*/
         ul {
@@ -123,7 +164,12 @@
                     <li><a id="tutorials" href="#none">TUTORIALS</a></li>
                     <li><a id="ranking" href="#none">RANKING</a></li>
                     <li><a id="news" href="#none">NEWS</a></li>
+                    <li><a id="news" href="#none" onclick="exportCardsAsJson()">Export</a></li>
+                    <li><a onclick="document.getElementById('file-input').click();">UPLOAD </a></li>
+                    <li><a onclick="LoadFromFirebase()">ACTUAL </a></li>
+                    <!--<li><a onclick="LoadEdited()">UPDATE </a></li>-->
                 </ul>
+                <input id="file-input" type="file" name="name" style="display: none;" />
             </div>
             <div class="col-md-10">
                 <h1 class="mb-0 text-center">
@@ -164,19 +210,45 @@
 
             <div class="col-md-5">
                 <textarea id="skill-description" name="skill-description" style="width:100%; height:100px"></textarea>
-                <div class="row">
-                    <label for="skill-job" class="col-md-3 text-center">JOB</label>
-                    <select name="skill-job" id="skill-job" class="col-md-7">
-                        <option value="">EMPTY</option>
-                        <option value="NONE">NONE</option>
-                        <option value="WARRIOR">WARRIOR</option>
-                        <option value="ARCHER">ARCHER</option>
-                        <option value="LANCER">LANCER</option>
-                        <option value="SCOUT">SCOUT</option>
-                        <option value="MAGE">MAGE</option>
-                    </select>
-                </div>
             </div>
+        </div>
+
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <label for="has-silence" class="col-md-7 text-center">Silence</label>
+                <input id="has-silence" type="checkbox" class="col-md-3 text-center" />
+            </div>
+            <div class="col-md-6">
+                <label for="has-attachment" class="col-md-7 text-center">IS Attachment</label>
+                <input id="has-attachment" type="checkbox" class="col-md-3 text-center" />
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <label for="skill-job" class="col-md-3 text-center">JOB</label>
+                <select name="skill-job" id="skill-job" class="col-md-7 mb-3">
+                    <option value="">EMPTY</option>
+                    <option value="NONE">NONE</option>
+                    <option value="WARRIOR">WARRIOR</option>
+                    <option value="ARCHER">ARCHER</option>
+                    <option value="LANCER">LANCER</option>
+                    <option value="SCOUT">SCOUT</option>
+                    <option value="MAGE">MAGE</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="skill-animaton" class="col-md-4 text-center">ANIMATION</label>
+                <select name="skill-animaton" id="skill-animaton" class="col-md-7 ">
+                    <option value="GHOST">GHOST</option>
+                    <option value="KILL">KILL</option>
+                    <option value="FIREBALL">FIREBALL</option>
+                    <option value="EXPLOSION">EXPLOSION</option>
+                    <option value="">YET TO COME</option>
+                </select>
+            </div>
+
         </div>
 
         <hr />
@@ -218,8 +290,10 @@
                     <option value="DRAW">DRAW</option>
                     <option value="BUFF">BUFF</option>
                     <option value="KILL">KILL</option>
+                    <option value="RESURRECT">RESURRECT</option>
                     <option value="DISINTEGRATE">DISINTEGRATE</option>
                     <option value="COPY">COPY</option>
+                    <option value="CHOOSE">CHOOSE</option>
                     <option value="DISCOVER">DISCOVER</option>
                 </select>
             </div>
@@ -235,12 +309,16 @@
                     <option value="ATTACK_TYPE">ATTACK_TYPE</option>
                     <option value="CARD_TYPE">CARD_TYPE</option>
                     <option value="RACE">RACE</option>
+                    <option value="BOARD_RANGE">BOARD_RANGE</option>
                 </select>
             </div>
             <div class="col-md-4">
                 <label for="skill-source-category-detail" class="col-md-5 text-center">DETAILED</label>
                 <select name="skill-source-category-detail" id="skill-source-category-detail" class="col-md-7" style="width: 200px;">
                     <option value="NONE">NONE</option>
+                    <option value="MINION">MINION</option>
+                    <option value="SPELL">SPELL</option>
+                    <option value="AROUND">AROUND</option>
                     <option value="ARCHER">ARCHER</option>
                     <option value="WARRIOR">WARRIOR</option>
                     <option value="MAGE">MAGE</option>
@@ -289,11 +367,9 @@
         <br />
         <hr />
         <div class="row">
-            <div class="col-md-3"></div>
             <button class="col-md-3" onclick="updateAbility()">Add-Skill</button>
             <div class="col-md-3"></div>
-            <!--<button class="col-md-3" onclick="exportCardsAsJson()">Export</button>
-            <button class="col-md-3" onclick="saveTemporaryChanges()">Update</button>-->
+            <button class="col-md-3" onclick="addChildAbility()">Add-As-Attachement</button>
             <button class="col-md-3" onclick="toggleSkillFormVisibility()">Close</button>
         </div>
 
@@ -309,7 +385,7 @@
                 <img id="card-image" src="images/favicon.ico" />
             </div>
             <div class="col-md-3">
-                <div class="row"><span class="col-md-3">Name</span><span class="col-md-7"> <input id="card-name" width="20"/> </span></div>
+                <div class="row"><span class="col-md-3">Name</span><span class="col-md-7"> <input id="card-name" width="20" /> </span></div>
                 <div class="row"><span class="col-md-3">Atk</span><span class="col-md-7"> <input id="card-atk" type="number" /> </span> </div>
                 <div class="row"><span class="col-md-3">Def</span><span class="col-md-7"> <input id="card-def" type="number" /> </span> </div>
                 <div class="row"><span class="col-md-3">Cost</span><span class="col-md-7"> <input id="card-cost" type="number" /> </span> </div>
@@ -374,10 +450,13 @@
         <br />
 
         <div class="row px-4">
-            <button class="col-md-3" onclick="toggleSkillFormVisibility()">SKILL</button>
-            <button class="col-md-3" onclick="exportCardsAsJson()">Export</button>
-            <button class="col-md-3" onclick="saveTemporaryChanges()">Update</button>
-            <button class="col-md-3" onclick="toggleCardFormVisibility()">Close</button>
+            <button class="col-md-4" onclick="toggleSkillFormVisibility()">CLEAR-SKILL</button>
+            <button class="col-md-4" onclick="saveTemporaryChanges()">UPDATE</button>
+            <button class="col-md-4" onclick="toggleCardFormVisibility()">CLOSE</button>
+        </div>
+        <hr />
+        <h3 class="text-center"> SKILLS </h3>
+        <div id="skill-btns" class="row px-4">
         </div>
 
     </div>
@@ -388,6 +467,9 @@
         var editCard = "";
         var details = "";
         var abilities = "";
+        var ability;
+
+        document.getElementById('file-input').addEventListener('change', readSingleFile, false);
 
         document.getElementById('cardForm').style.visibility = "collapse";
         document.getElementById('abilityForm').style.visibility = "collapse";
@@ -433,9 +515,34 @@
         document.getElementById('innerContainer').style.visibility = "visible";
         document.getElementById('guild').className += " active";
 
-        fetch('https://fire-hexos-default-rtdb.europe-west1.firebasedatabase.app/cards.json')
-            .then(response => response.json())
-            .then(data => processCards(data));
+        function LoadFromFirebase() {
+            fetch('https://fire-hexos-default-rtdb.europe-west1.firebasedatabase.app/cards.json')
+                .then(response => response.json())
+                .then(data => processCards(data));
+        }
+
+
+
+        function readSingleFile(e) {
+            var file = e.target.files[0];
+            if (!file) {
+                return;
+            }
+            document.getElementById('innerContainer').innerHTML = "";
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var contents = e.target.result;
+                console.log(contents);
+                processCards(JSON.parse(contents));
+            };
+            reader.readAsText(file);
+        }
+
+        function LoadEdited() {
+            document.getElementById('innerContainer').innerHTML = "";
+            processCards(importedCards);
+        }
+
 
         function processCards(cards) {
             importedCards = cards;
@@ -467,6 +574,15 @@
 
             div.appendChild(img);
             div.appendChild(button);
+
+
+
+            var infoDiv = document.createElement('p');
+            infoDiv.className = "infoCard";
+            infoDiv.innerText = card.job + "-" + card.race + "-" + card.animationType + "- $$" + card.gold;
+
+            div.appendChild(infoDiv);
+
             cardDiv.appendChild(div);
             document.getElementById('innerContainer').appendChild(cardDiv);
 
@@ -496,6 +612,35 @@
             document.getElementById('card-rarity').value = card.rarity;
             document.getElementById('card-race').value = card.race;
             document.getElementById('card-animationType').value = card.animationType;
+
+            var skillsBtnContainer = document.getElementById('skill-btns');
+            while (skillsBtnContainer.lastElementChild) {
+                skillsBtnContainer.removeChild(skillsBtnContainer.lastElementChild);
+            }
+
+            if (typeof editCard.abilities !== 'undefined') {
+                for (const element of editCard.abilities) {
+                    var abilityContainer = document.createElement('div');
+                    abilityContainer.className += "customAbilityCard ";
+
+                    var button = document.createElement('button');
+                    button.innerHTML = "<b>" + element.name + "</b>";
+                    button.className += " ability-btn";
+                    button.onclick = function () {
+                        loadingSkillForm(element);
+                    };
+
+                    var p = document.createElement('p');
+                    p.innerText = JSON.stringify(element);
+
+                    abilityContainer.appendChild(p);
+                    abilityContainer.appendChild(button);
+                    skillsBtnContainer.appendChild(abilityContainer);
+                }
+            }
+
+
+
         }
 
         function GetSkill() {
@@ -510,6 +655,33 @@
             details = new Map();
             document.getElementById('sourceDetailsInfo').innerHTML = "";
         }
+
+        function loadingSkillForm(skill) {
+            abilities = editCard.abilities;
+            details = new Map();
+            toggleSkillFormVisibility();
+            document.getElementById('ability-card-image').src = editCard.imageUrl;
+            document.getElementById('skill-name').value = skill.name;
+            document.getElementById('skill-action').value = skill.animationType;
+            document.getElementById('skill-description').value = skill.description;
+            document.getElementById('skill-atk-bonus').value = skill.atk;
+            document.getElementById('skill-def-bonus').value = skill.def;
+            document.getElementById('skill-cost-bonus').value = skill.cost;
+            document.getElementById('skill-gold-bonus').value = skill.gold;
+
+            document.getElementById('skill-job').value = skill.job;
+            document.getElementById('skill-trigger').value = skill.triggerType;
+            document.getElementById('has-silence').checked = skill.silence;
+
+            document.getElementById('skill-target').value = skill.targets.target;
+
+            document.getElementById('skill-source').value = skill.sources.target;
+            details = skill.sources.details;
+
+            //document.getElementById('update-current-skill').setAttribute('onclick', 'updateCurrentAbility( " ' + skill + ' " )');
+        }
+
+
 
         function exportCardsAsJson() {
             var myJsonString = JSON.stringify(importedCards);
@@ -538,6 +710,7 @@
             } else {
                 x.style.visibility = 'collapse';
             }
+            LoadEdited();
         }
 
         function saveTemporaryChanges() {
@@ -561,9 +734,48 @@
             details.set(sourceCategory, sourceCategoryDetail);
         }
 
+        function updateCurrentAbility(ability2) {
+            ability2.animationType = document.getElementById('skill-action').value;
+            ability2.atk = new Number(document.getElementById('skill-atk-bonus').value);
+            ability2.cost = new Number(document.getElementById('skill-cost-bonus').value);
+            ability2.def = new Number(document.getElementById('skill-def-bonus').value);
+            ability2.description = document.getElementById('skill-description').value;
+            ability2.gold = new Number(document.getElementById('skill-gold-bonus').value);
+            ability2.job = document.getElementById('skill-job').value;
+            ability2.loop = 1;
+            ability2.name = document.getElementById('skill-name').value;
+            ability2.range = 1;
+            ability2.triggerType = document.getElementById('skill-trigger').value;
+            ability2.silence = document.getElementById('has-silence').checked;
+            var targets = new Object();
+            targets.target = document.getElementById('skill-target').value;
+            ability2.targets = targets;
+
+            var sources = new Object();
+            sources.target = document.getElementById('skill-source').value;
+
+            if (details.size > 0) {
+                console.log("Details were added");
+                sources.details = Object.fromEntries(details);
+            }
+
+            ability2.sources = sources;
+
+            var abilityInfo = ""
+
+            for (let i = 0; i < abilities.length; i++) {
+                var a = abilities[i];
+                abilityInfo = (abilityInfo + "<br>" + a.name + "::=>" + JSON.stringify(a.sources.details));
+            }
+
+
+            document.getElementById('sourceDetailsInfo').innerHTML = abilityInfo;
+            details = new Map();
+        }
+
         function updateAbility() {
-            var ability = new Object();
-            ability.animationType = document.getElementById('skill-action').value;
+            ability = new Object();
+            ability.actionType = document.getElementById('skill-action').value;
             ability.atk = new Number(document.getElementById('skill-atk-bonus').value);
             ability.cost = new Number(document.getElementById('skill-cost-bonus').value);
             ability.def = new Number(document.getElementById('skill-def-bonus').value);
@@ -574,7 +786,8 @@
             ability.name = document.getElementById('skill-name').value;
             ability.range = 1;
             ability.triggerType = document.getElementById('skill-trigger').value;
-
+            ability.silence = document.getElementById('has-silence').checked;
+            ability.hasAttachment = document.getElementById('has-attachment').checked;
             var targets = new Object();
             targets.target = document.getElementById('skill-target').value;
             ability.targets = targets;
@@ -599,11 +812,61 @@
                 var a = abilities[i];
                 abilityInfo = (abilityInfo + "<br>" + a.name + "::=>" + JSON.stringify(a.sources.details));
             }
-            
+
 
             document.getElementById('sourceDetailsInfo').innerHTML = abilityInfo;
             details = new Map();
         }
+
+        function addChildAbility() {
+            child = new Object();
+            child.actionType = document.getElementById('skill-action').value;
+            child.atk = new Number(document.getElementById('skill-atk-bonus').value);
+            child.cost = new Number(document.getElementById('skill-cost-bonus').value);
+            child.def = new Number(document.getElementById('skill-def-bonus').value);
+            child.description = document.getElementById('skill-description').value;
+            child.gold = new Number(document.getElementById('skill-gold-bonus').value);
+            child.job = document.getElementById('skill-job').value;
+            child.loop = 1;
+            child.name = document.getElementById('skill-name').value;
+            child.range = 1;
+            child.triggerType = document.getElementById('skill-trigger').value;
+            child.silence = document.getElementById('has-silence').checked;
+            var targets = new Object();
+            targets.target = document.getElementById('skill-target').value;
+            child.targets = targets;
+
+            var sources = new Object();
+            sources.target = document.getElementById('skill-source').value;
+
+            if (details.size > 0) {
+                console.log("Details were added");
+                sources.details = Object.fromEntries(details);
+            }
+
+
+            child.sources = sources;
+            ability.child = child;
+            //abilities.push(ability);
+            //editCard.abilities = abilities;
+
+
+            var abilityInfo = ""
+
+            for (let i = 0; i < abilities.length; i++) {
+                var a = abilities[i];
+                abilityInfo = (abilityInfo + "<br>" + a.name + "::=>" + JSON.stringify(a.sources.details));
+            }
+
+
+            var info = document.getElementById('sourceDetailsInfo');
+            document.getElementById('sourceDetailsInfo').innerHTML = info.textContent + "<br>" + abilityInfo;
+            details = new Map();
+        }
+
+
+
+
     </script>
 </body>
 </html>
