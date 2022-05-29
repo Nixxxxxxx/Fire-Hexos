@@ -40,7 +40,7 @@
 
         .customCard {
             margin: 10px;
-            height: 200px;
+            height: 300px;
             border: double 2px;
             border-radius: 4px;
         }
@@ -56,7 +56,7 @@
 
 
         .infoCard {
-            width: 150px;
+            min-width: 150px;
         }
 
         div.customAbilityCard {
@@ -205,6 +205,7 @@
                 <div class="row"><span class="col-md-3">Def : </span><span class="col-md-7"> <input id="skill-def-bonus" type="number" value="0" /> </span> </div>
                 <div class="row"><span class="col-md-3">Cost : </span><span class="col-md-7"> <input id="skill-cost-bonus" type="number" value="0" /> </span> </div>
                 <div class="row"><span class="col-md-3">Gold : </span><span class="col-md-7"> <input id="skill-gold-bonus" type="number" value="0" /> </span> </div>
+                <div class="row"><span class="col-md-3">Range : </span><span class="col-md-7"> <input id="skill-range" type="number" value="0" /> </span> </div>
 
             </div>
 
@@ -224,9 +225,10 @@
                 <input id="has-attachment" type="checkbox" class="col-md-3 text-center" />
             </div>
         </div>
+
         <hr />
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="skill-job" class="col-md-3 text-center">JOB</label>
                 <select name="skill-job" id="skill-job" class="col-md-7 mb-3">
                     <option value="">EMPTY</option>
@@ -238,14 +240,29 @@
                     <option value="MAGE">MAGE</option>
                 </select>
             </div>
-            <div class="col-md-6">
-                <label for="skill-animaton" class="col-md-4 text-center">ANIMATION</label>
-                <select name="skill-animaton" id="skill-animaton" class="col-md-7 ">
-                    <option value="GHOST">GHOST</option>
-                    <option value="KILL">KILL</option>
-                    <option value="FIREBALL">FIREBALL</option>
+            <div class="col-md-4">
+                <label for="skill-animation" class="col-md-4 text-center">-ATTACK-</label>
+                <select name="skill-animation" id="skill-animation" class="col-md-7 ">
+                    <option value="NONE">NO CHANGE</option>
+                    <option value="SWITCH">SWITCH</option>
+                    <option value="DEATH">DEATH</option>
                     <option value="EXPLOSION">EXPLOSION</option>
-                    <option value="">YET TO COME</option>
+                    <option value="FIREBALL">FIREBALL</option>
+                    <option value="GHOST">GHOST</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="skill-race" class="col-md-4 text-center">RACE</label>
+                <select name="skill-race" id="skill-race" class="col-md-7 ">
+                    <option value="NONE">NO CHANGE</option>
+                    <option value="UNDEFINE">UNDEFINE</option>
+                    <option value="HUMAN">HUMAN</option>
+                    <option value="ORG">ORG</option>
+                    <option value="ELF">ELF</option>
+                    <option value="UNDEAD">UNDEAD</option>
+                    <option value="DEMON">DEMON</option>
+                    <option value="GOLEM">GOLEM</option>
+                    <option value="BEAST">BEAST</option>
                 </select>
             </div>
 
@@ -267,6 +284,7 @@
                     <option value="DEATHRATTLE">DEATHRATTLE</option>
                     <option value="REDEMPTION">REDEMPTION</option>
                     <option value="BETRAYAL">BETRAYAL</option>
+                    <option value="TARGET">TARGET</option>
                 </select>
             </div>
             <div class="col-md-4">
@@ -579,7 +597,7 @@
 
             var infoDiv = document.createElement('p');
             infoDiv.className = "infoCard";
-            infoDiv.innerText = card.job + "-" + card.race + "-" + card.animationType + "- $$" + card.gold;
+            infoDiv.innerText = "$:" + card.cost + "-Atk:" + card.atk + "-Def:" + card.def + " " + card.job + "-" + card.race + "-" + card.animationType + "- $$" + card.gold;
 
             div.appendChild(infoDiv);
 
@@ -604,7 +622,7 @@
             //    var editor = new Jodit('#editor');
             //    editor.value = card.description;
             //} catch (error) {
-                document.getElementById('editor').value = editCard.description;
+            document.getElementById('editor').value = editCard.description;
             //}
 
 
@@ -662,7 +680,7 @@
             toggleSkillFormVisibility();
             document.getElementById('ability-card-image').src = editCard.imageUrl;
             document.getElementById('skill-name').value = skill.name;
-            document.getElementById('skill-action').value = skill.animationType;
+            document.getElementById('skill-action').value = skill.actionType;
             document.getElementById('skill-description').value = skill.description;
             document.getElementById('skill-atk-bonus').value = skill.atk;
             document.getElementById('skill-def-bonus').value = skill.def;
@@ -735,7 +753,7 @@
         }
 
         function updateCurrentAbility(ability2) {
-            ability2.animationType = document.getElementById('skill-action').value;
+            ability2.actionType = document.getElementById('skill-action').value;
             ability2.atk = new Number(document.getElementById('skill-atk-bonus').value);
             ability2.cost = new Number(document.getElementById('skill-cost-bonus').value);
             ability2.def = new Number(document.getElementById('skill-def-bonus').value);
@@ -744,7 +762,7 @@
             ability2.job = document.getElementById('skill-job').value;
             ability2.loop = 1;
             ability2.name = document.getElementById('skill-name').value;
-            ability2.range = 1;
+            ability2.range = new Number(document.getElementById('skill-range').value);
             ability2.triggerType = document.getElementById('skill-trigger').value;
             ability2.silence = document.getElementById('has-silence').checked;
             var targets = new Object();
@@ -784,8 +802,10 @@
             ability.job = document.getElementById('skill-job').value;
             ability.loop = 1;
             ability.name = document.getElementById('skill-name').value;
-            ability.range = 1;
+            ability.range = new Number(document.getElementById('skill-range').value);;
             ability.triggerType = document.getElementById('skill-trigger').value;
+            ability.changeRaceTo = document.getElementById('skill-race').value;
+            ability.animationType = document.getElementById('skill-animation').value;
             ability.silence = document.getElementById('has-silence').checked;
             ability.hasAttachment = document.getElementById('has-attachment').checked;
             var targets = new Object();
@@ -829,8 +849,10 @@
             child.job = document.getElementById('skill-job').value;
             child.loop = 1;
             child.name = document.getElementById('skill-name').value;
-            child.range = 1;
+            child.range = new Number(document.getElementById('skill-range').value);;
             child.triggerType = document.getElementById('skill-trigger').value;
+            child.changeRaceTo = document.getElementById('skill-race').value;
+            child.animationType = document.getElementById('skill-animation').value;
             child.silence = document.getElementById('has-silence').checked;
             var targets = new Object();
             targets.target = document.getElementById('skill-target').value;
