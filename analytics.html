@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>HEXO ANALYTICS</title>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <style>
+        .bar {
+            fill: green;
+        }
+
+        svg {
+            background-color:gray;
+        }
+
+        h2{
+            text-align:center;
+        }
+    </style>
+</head>
+<body id="svg_wrapper">
+    <h2><a href=".\index.html">HOME</a></h2>
+    <svg id="d3_demo"></svg>
+
+    <script>
+        var myData = "";
+
+        // set the dimensions and margins of the graph
+        const width = 1280, height = 500;
+
+        const x_scale = d3.scaleBand().range([0, width]).padding(0.1);
+        const y_scale = d3.scaleLinear().range([height, 0]);
+
+
+            d3.json("https://fire-hexos-default-rtdb.europe-west1.firebasedatabase.app/analytics.json", function (error, data) {
+                myData = data;
+                const svg = d3.select("#d3_demo").attr("width", width).attr("height", 100*(data.length+1));
+
+
+                // Create a scale: transform value in pixel
+                var x = d3.scaleLinear()
+                    .domain([0, 100])         // This is the min and the max of the data: 0 to 100 if percentages
+                    .range([0, 200]);       // This is the corresponding value I want in Pixel
+
+                // Show the axis that corresponds to this scale
+                //svg.call(d3.axisBottom(x));
+
+                for (let i = 1; i <= data.length; i++) {
+                    svg.append("rect").attr("x", x(35)).attr("y", (100 * i) + 10).attr("width", 250).attr("height", 20).style("stroke", "blue").style("fill", "red");
+                    svg.append("circle").attr("cx", x(25)).attr("cy", 100 * i).attr("r", 40).style("stroke", "yellow").style("fill", "blue");
+                    svg.append('image')
+                        .attr('xlink:href', 'https://firebasestorage.googleapis.com/v0/b/fire-hexos.appspot.com/o/card_images%2F145120d9-a492-4b8a-8ee8-d98a6e61cf00.png?alt=media&token=7feb3fcc-1bf2-40cf-8115-7dddc9bec566')
+                        .attr('width', 60)
+                        .attr('height', 60)
+                        .attr('x', x(11))
+                        .attr('y', (100 * i) - 30);
+
+
+                        svg.append("text")
+                        .attr("x", x(100))
+                            .attr("y", (100 * i) + 95)
+                        .attr("dy", "-5.1em")
+                        .attr("text-anchor", "end")
+                        .attr("font-size", "18px")
+                        .attr("stroke", "black")
+                        .text("population");
+                }
+
+
+        });
+    </script>
+</body>
+</html>

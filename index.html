@@ -63,6 +63,7 @@
             border-style: double;
             padding: 20px;
             text-align: center;
+            overflow-wrap:break-word;
             margin-bottom: 4em;
         }
 
@@ -161,6 +162,7 @@
             <div class="col-md-2 navigation">
                 <ul>
                     <li><a id="guild" class="active" href="#none">GUILD</a></li>
+                    <li><a id="analytics"  href=".\analytics.html">ANALYTICS</a></li>
                     <li><a id="tutorials" href="#none">TUTORIALS</a></li>
                     <li><a id="ranking" href="#none">RANKING</a></li>
                     <li><a id="news" href="#none">NEWS</a></li>
@@ -238,6 +240,7 @@
                     <option value="LANCER">LANCER</option>
                     <option value="SCOUT">SCOUT</option>
                     <option value="MAGE">MAGE</option>
+                    <option value="KNIGHT">KNIGHT</option>
                 </select>
             </div>
             <div class="col-md-4">
@@ -285,6 +288,7 @@
                     <option value="REDEMPTION">REDEMPTION</option>
                     <option value="BETRAYAL">BETRAYAL</option>
                     <option value="TARGET">TARGET</option>
+                    <option value="EXECUTE">EXECUTE</option>
                 </select>
             </div>
             <div class="col-md-4">
@@ -299,6 +303,8 @@
                     <option value="GRAVEYARD">GRAVEYARD</option>
                     <option value="BOARDALLY">BOARDALLY</option>
                     <option value="BOARDOP">BOARDOP</option>
+                    <option value="ALL_IN_PLAY">ALL_IN_PLAY</option>
+                    <option value="DATABASE">DATABASE</option>
                     <option value="SELF">SELF</option>
                 </select>
             </div>
@@ -312,6 +318,7 @@
                     <option value="DISINTEGRATE">DISINTEGRATE</option>
                     <option value="COPY">COPY</option>
                     <option value="CHOOSE">CHOOSE</option>
+                    <option value="CHOOSE_RESURRECT">CHOOSE_RESURRECT</option>
                     <option value="DISCOVER">DISCOVER</option>
                 </select>
             </div>
@@ -340,6 +347,7 @@
                     <option value="ARCHER">ARCHER</option>
                     <option value="WARRIOR">WARRIOR</option>
                     <option value="MAGE">MAGE</option>
+                    <option value="KNIGHT">KNIGHT</option>
                     <option value="LANCER">LANCER</option>
                     <option value="SCOUT">SCOUT</option>
                     <option value="SWITCH">SWITCH</option>
@@ -399,7 +407,7 @@
 
     <div id="cardForm" class="container">
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-3">
                 <img id="card-image" src="images/favicon.ico" />
             </div>
             <div class="col-md-3">
@@ -410,7 +418,7 @@
                 <div class="row"><span class="col-md-3">Gold</span><span class="col-md-7"> <input id="card-gold" type="number" /> </span> </div>
             </div>
 
-            <div class="col-md-7">
+            <div class="col-md-5">
                 <textarea id="editor" name="editor" style="width:100%; max-height:250px"></textarea>
             </div>
         </div>
@@ -448,6 +456,7 @@
                     <option value="LANCER">LANCER</option>
                     <option value="SCOUT">SCOUT</option>
                     <option value="MAGE">MAGE</option>
+                    <option value="KNIGHT">KNIGHT</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -474,7 +483,8 @@
         </div>
         <hr />
         <h3 class="text-center"> SKILLS </h3>
-        <div id="skill-btns" class="row px-4">
+        <div  class="row px-4">
+            <div id="skill-btns" class="col-md-12"></div>
         </div>
 
     </div>
