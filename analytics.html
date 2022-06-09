@@ -3,7 +3,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>HEXO ANALYTICS</title>
+    <title>FIRE HEXOS</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     <script src="https://d3js.org/d3.v4.js"></script>
     <style>
         .bar {
@@ -29,7 +30,7 @@
         }
 
         li {
-           float:left;
+            float: left;
         }
 
             li a {
@@ -43,15 +44,12 @@
                 li a:hover {
                     background-color: #111;
                 }
-
-
     </style>
 </head>
 <body>
     <ul>
         <li><a class="active" href=".\index.html">Home</a></li>
         <li><a onclick="ShowCardRatedFavorite()">Favorites</a></li>
-        <li><a href="#contact">Contact</a></li>
     </ul>
 
     <svg id="d3_demo"></svg>
@@ -59,9 +57,8 @@
     <script>
         var importedCards = "";
         var dataDump = "";
-
         // set the dimensions and margins of the graph
-        const width = 1280, height = 500;
+        const width = document.body.clientWidth-20, height = 500;
 
         const x_scale = d3.scaleBand().range([0, width]).padding(0.1);
         const y_scale = d3.scaleLinear().range([height, 0]);
